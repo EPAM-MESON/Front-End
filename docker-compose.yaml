@@ -1,0 +1,20 @@
+version: '1.0'
+
+services:
+  meson_frontend:
+    container_name: meson_front
+    tty: true
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - "80:80"
+      - "3000:3000"
+    networks: 
+      - myytnetwork
+
+networks:
+  myytnetwork:
+    driver: bridge
