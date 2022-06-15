@@ -1,6 +1,6 @@
 # Stage 1
 # Build docker image of react app
-FROM node:12.18.2 as build-stage
+FROM node:15.12.0 as build-stage
 
 # set working directory
 RUN mkdir /usr/app
@@ -9,20 +9,8 @@ COPY . /usr/app
 
 WORKDIR /usr/app
 
-RUN npm run build
+RUN npm install
 
-# Stage 2
-# Copy the react app build above in nginx
-FROM nginx:alpine
+COPY . /usr/app
 
-# Set working directory to nginx asset directory
-WORKDIR /usr/share/nginx/html
-
-# Remove default nginx static assets
-RUN rm -rf ./*
-
-# Copy static assets from builder stage
-COPY --from=build-stage /usr/app/dist .
-
-# Containers run nginx with global directives and daemon off
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD [ "npm", "run", "dev" ]
