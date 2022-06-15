@@ -1,14 +1,28 @@
-FROM node:15.12.0
+# Stage 1
+# Build docker image of react app
+FROM node:12.18.2 as build-stage
 
-WORKDIR /app
+# set working directory
+RUN mkdir /usr/app
+#copy all files from current directory to docker
+COPY . /usr/app
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+WORKDIR /usr/app
 
-ADD . .
+RUN npm run build
 
-RUN npm install
+# Stage 2
+# Copy the react app build above in nginx
+FROM nginx:alpine
 
-ENTRYPOINT ["/entrypoint.sh"]
+# Set working directory to nginx asset directory
+WORKDIR /usr/share/nginx/html
 
-# CMD ["npm", "run", "dev"]
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy static assets from builder stage
+COPY --from=build-stage /usr/app/dist .
+
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

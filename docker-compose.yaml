@@ -2,14 +2,20 @@ version: '3'
 
 services:
   frontend-dev:
+    stdin_open: true
     image: frontend-dev
     container_name: frontend-dev
     build:
       context: ./
       dockerfile: Dockerfile
     tty: true
+    expose:
+      - 8080
     ports:
-      - 3000:3000
+      - 8080:80
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
 
 networks:
   myytnetwork:
