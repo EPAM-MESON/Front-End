@@ -19,22 +19,22 @@ And that is it!! Easy as cake!
  - Make sure `/etc/nginx/sites-available/default` has the following information
   <details>
     <summary>Contents of: /etc/nginx/sites-available/default</summary>
-    ```
-    location / {
-      # First attempt to serve request as file, then
-      # as directory, then fall back to displaying a 404.
-      
-      # Comment the next line like on the example
-      # try_files $uri $uri/ =404;
-      
-      # Add all of this
-      proxy_set_header HOST $host;
-      proxy_set_header X-REAL-IP $remote_addr;
+ 
+     location / {
+       # First attempt to serve request as file, then
+       # as directory, then fall back to displaying a 404.
 
-      # We are using a real ngnix to proxy into our docker nginx
-      proxy_pass http://localhost:8080; #React prod app
-    }
-    ```
+       # Comment the next line like on the example
+       # try_files $uri $uri/ =404;
+
+       # Add all of this
+       proxy_set_header HOST $host;
+       proxy_set_header X-REAL-IP $remote_addr;
+
+       # We are using a real ngnix to proxy into our docker nginx
+       proxy_pass http://localhost:8080; #React prod app
+     }
+ 
   </details>
 
  - Visit [http://your_ip](#)
