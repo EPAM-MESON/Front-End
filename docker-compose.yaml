@@ -2,7 +2,10 @@ version: '3'
 
 services:
   frontend-dev:
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     stdin_open: true
+    restart: always
     image: frontend-dev
     container_name: frontend-dev
     build:
@@ -16,9 +19,4 @@ services:
       - 3000:3000
       - 8080:80
     volumes:
-      - '.:/usr/src/app'
-      - /usr/src/app/node_modules
-
-networks:
-  myytnetwork:
-    driver: bridge
+      - .:/usr/app:rw
