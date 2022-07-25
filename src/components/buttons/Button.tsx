@@ -18,7 +18,7 @@ const getButtonVariant = (variant?: string) =>
 	variant === 'secondary' ? 'secondary' : 'primary';
 
 const getIconToDisplay = (button: ButtonTypes) => (
-	<img src={button === 'secondary' ? AlertIcon : CrossIcon} alt="Alert Icon" />
+	<img src={button === 'secondary' ? AlertIcon : CrossIcon} alt="Icon" />
 );
 
 const contentToDisplay = (
@@ -29,7 +29,7 @@ const contentToDisplay = (
 	if (iconDirection === 'right') {
 		return (
 			<React.Fragment>
-				{icon} {children}
+				{children} {icon}
 			</React.Fragment>
 		);
 	} else if (iconDirection === 'none') {
