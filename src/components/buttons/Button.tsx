@@ -14,11 +14,8 @@ type props = {
 	onClick?(param: any): any;
 };
 
-const getButtonVariant = (variant?: string) =>
-	variant === 'secondary' ? 'secondary' : 'primary';
-
-const getIconToDisplay = (button: ButtonTypes) => (
-	<img src={button === 'secondary' ? AlertIcon : CrossIcon} alt="Icon" />
+const getIconToDisplay = (variant: ButtonTypes) => (
+	<img src={variant === 'secondary' ? AlertIcon : CrossIcon} alt="Icon" />
 );
 
 const contentToDisplay = (
@@ -32,30 +29,30 @@ const contentToDisplay = (
 				{children} {icon}
 			</React.Fragment>
 		);
-	} else if (iconDirection === 'none') {
-		return <React.Fragment>{children}</React.Fragment>;
 	}
-	return (
-		<React.Fragment>
-			{icon} {children}
-		</React.Fragment>
-	);
+	if (iconDirection === 'left') {
+		return (
+			<React.Fragment>
+				{icon} {children}
+			</React.Fragment>
+		);
+	}
+	return <React.Fragment>{children}</React.Fragment>;
 };
 
 const Button = ({
-	variant,
-	children,
+	variant = 'primary',
 	iconPosition,
+	children,
 	disabled,
 	onClick,
 }: props) => {
-	const buttonType = getButtonVariant(variant);
-	const icon = getIconToDisplay(buttonType);
+	const icon = getIconToDisplay(variant);
 	const buttonContent = contentToDisplay(icon, iconPosition, children);
 	return (
 		<button
 			onClick={onClick}
-			className={`btn ${buttonType}`}
+			className={`btn ${variant}`}
 			type="button"
 			disabled={disabled}
 		>
