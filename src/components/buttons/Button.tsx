@@ -3,13 +3,13 @@ import AlertIcon from '../../assets/icons/alert.svg';
 import CrossIcon from '../../assets/icons/cross.svg';
 import React from 'react';
 
-type IconTypes = 'left' | 'right' | 'none';
+type IconPositions = 'left' | 'right' | 'none';
 type ButtonTypes = 'primary' | 'secondary';
 
 type props = {
 	variant?: ButtonTypes;
 	children?: JSX.Element | string;
-	iconPosition?: IconTypes;
+	iconPosition?: IconPositions;
 	disabled?: boolean;
 	onClick?(param: any): any;
 };
@@ -20,7 +20,7 @@ const getIconToDisplay = (variant: ButtonTypes) => (
 
 const contentToDisplay = (
 	icon: JSX.Element,
-	iconDirection?: IconTypes,
+	iconDirection?: IconPositions,
 	children?: JSX.Element | string
 ): JSX.Element => {
 	if (iconDirection === 'right') {
